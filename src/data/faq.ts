@@ -22,7 +22,11 @@ export const FAQS: Faq[] = [
   },
   {
     q: '¿Qué pasa con mis datos de ubicación?',
-    a: 'Tu ubicación se procesa solo en tu teléfono para calcular la distancia al destino. No la almacenamos en servidores, no la vendemos ni la compartimos. Puedes leer el detalle en nuestra Política de privacidad.',
+    a: 'El seguimiento durante el viaje ocurre dentro de tu teléfono: la distancia al destino se calcula localmente y tu recorrido no se envía a ningún servidor. Solo al buscar un destino o trazar la ruta se consultan las APIs de Google Maps con tu posición. No tenemos servidores propios, ni cuentas, ni analítica, y no vendemos datos. El detalle está en nuestra Política de privacidad.',
+  },
+  {
+    q: '¿La búsqueda por voz envía mi audio a algún servidor?',
+    a: 'No. La transcripción ocurre íntegramente dentro de tu iPhone: la grabación no llega a nuestros servidores, ni a los de Apple, ni a los de Google. Como consecuencia, el dictado también funciona sin cobertura. Si tu iPhone no tiene descargado el modelo de voz sin conexión, el botón de micrófono no aparece: preferimos ocultar la función antes que transcribir en un servidor.',
   },
   {
     q: '¿Por qué la app pide permiso de ubicación "Siempre"?',

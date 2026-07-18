@@ -208,7 +208,7 @@ h3 {
   color: var(--ink);
 }
 .prose ul {
-  margin: 0;
+  margin: 0 0 10px;
   padding-left: 20px;
 }
 .prose li + li {

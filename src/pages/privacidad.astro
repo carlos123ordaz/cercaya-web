@@ -14,8 +14,9 @@ import { CONTACT, LEGAL_UPDATED, SITE } from '../consts';
     <p class="page-date">Última actualización: {LEGAL_UPDATED}</p>
 
     <div class="callout">
-      En resumen: tu ubicación se procesa en tu teléfono para calcular la distancia a tu destino. No
-      vendemos tus datos ni rastreamos tus movimientos con fines publicitarios.
+      En resumen: el seguimiento que dispara tu alarma ocurre dentro del teléfono y no se guarda en
+      ningún servidor. Solo al buscar un destino o trazar la ruta se envían coordenadas a Google
+      Maps. No hay cuentas, ni analítica, ni publicidad, ni venta de datos.
     </div>
 
     <div class="prose">
@@ -30,18 +31,43 @@ import { CONTACT, LEGAL_UPDATED, SITE } from '../consts';
       <section>
         <h2>2. Datos que tratamos</h2>
         <p>
-          <strong>Ubicación en tiempo real (incluido segundo plano):</strong> se usa exclusivamente en
-          tu dispositivo para mostrar tu posición en el mapa y calcular la distancia al destino que elegiste.
-          No se almacena en nuestros servidores.
+          <strong>Ubicación en tiempo real (incluido segundo plano):</strong> el seguimiento continuo
+          que dispara la alarma ocurre <strong>solo en tu dispositivo</strong>: la distancia al destino
+          se calcula localmente y ese recorrido no se envía a ningún servidor, ni nuestro ni de terceros.
+          No tenemos servidores propios ni cuentas de usuario.
+        </p>
+        <p>
+          <strong>Coordenadas enviadas a Google:</strong> hay dos momentos puntuales en los que tu
+          posición sí sale del dispositivo, y ambos son necesarios para que la App funcione:
+        </p>
+        <ul>
+          <li>
+            Al <strong>buscar un destino</strong>, enviamos el texto que escribes junto a tu posición
+            aproximada, para que los resultados sean de tu zona y no de otro país.
+          </li>
+          <li>
+            Al <strong>trazar la ruta</strong>, enviamos tu coordenada de origen y la de destino para
+            obtener la distancia, el tiempo estimado y la línea del recorrido.
+          </li>
+        </ul>
+        <p>
+          Ambas peticiones van a Google Maps Platform (API de Places y API de Routes) y se rigen por la
+          política de privacidad de Google. No viajan asociadas a ningún identificador tuyo, porque la
+          App no tiene cuentas ni perfiles.
+        </p>
+        <p>
+          <strong>Búsqueda por voz (audio del micrófono):</strong> si usas el dictado para buscar un
+          destino, la transcripción ocurre
+          <strong>íntegramente en tu iPhone</strong>: la grabación no se envía a nuestros servidores,
+          ni a los de Apple, ni a los de Google. Por eso el dictado también funciona sin cobertura.
+          Cuando el modelo de voz sin conexión no está disponible en el dispositivo, el botón de
+          micrófono simplemente no aparece: preferimos desactivar la función antes que transcribir en
+          un servidor. El texto resultante sigue el mismo camino que si lo hubieras escrito a mano
+          (se envía a la API de Places para obtener resultados).
         </p>
         <p>
           <strong>Destinos, radios e historial de viajes:</strong> se guardan localmente en tu dispositivo
           para que puedas repetir viajes y fijar favoritos. Puedes borrarlos cuando quieras desde la App.
-        </p>
-        <p>
-          <strong>Búsquedas de lugares:</strong> el texto que escribes al buscar un destino se envía al
-          proveedor de mapas (Google Maps Platform / API de Places) para obtener resultados, conforme
-          a la política de privacidad de Google.
         </p>
       </section>
 
@@ -49,15 +75,13 @@ import { CONTACT, LEGAL_UPDATED, SITE } from '../consts';
         <h2>3. Finalidades y base legal</h2>
         <p>
           Usamos estos datos únicamente para: (a) activar la alarma cuando entras al radio
-          configurado; (b) mostrar tu posición y la ruta en el mapa; (c) mantener tu historial y
-          favoritos en el dispositivo; y (d) mejorar la estabilidad de la App mediante métricas
-          anónimas de errores.
+          configurado; (b) buscar el destino que escribes y trazar la ruta en el mapa; y (c) mantener
+          tu historial y favoritos en el dispositivo. No hay ninguna otra finalidad.
         </p>
         <p>
-          La base legal es la <strong>ejecución del servicio que solicitas</strong> (la alarma de
-          llegada) y, para las métricas de estabilidad, nuestro interés legítimo en mantener la App
-          funcionando. El acceso a la ubicación siempre requiere tu consentimiento explícito a través
-          del diálogo del sistema operativo, que puedes retirar en cualquier momento.
+          La base legal es la <strong>ejecución del servicio que solicitas</strong>: sin ubicación no
+          hay alarma de llegada. El acceso a la ubicación siempre requiere tu consentimiento explícito
+          a través del diálogo del sistema operativo, que puedes retirar en cualquier momento.
         </p>
       </section>
 
@@ -66,25 +90,46 @@ import { CONTACT, LEGAL_UPDATED, SITE } from '../consts';
         <p>
           No vendemos ni alquilamos tus datos. No construimos perfiles publicitarios con tu
           ubicación. No compartimos tu historial de viajes con terceros. No accedemos a tus
-          contactos, fotos ni mensajes.
+          contactos, fotos ni mensajes. <strong>No usamos analítica, publicidad ni SDK de
+          seguimiento de terceros</strong>: la App solo incorpora componentes del propio sistema
+          operativo.
         </p>
       </section>
 
       <section>
         <h2>5. Terceros</h2>
         <p>
-          La App usa Google Maps Platform (mapas y búsqueda de lugares). El tratamiento que Google
-          haga de las consultas se rige por su propia política de privacidad. Las métricas anónimas
-          de fallos pueden procesarse mediante servicios estándar de estabilidad de aplicaciones.
+          El único tercero es <strong>Google Maps Platform</strong>, mediante su API de Places
+          (búsqueda de destinos) y su API de Routes (cálculo de la ruta), tal como se detalla en el
+          punto 2. El tratamiento que Google haga de esas consultas se rige por su propia
+          <a href="https://policies.google.com/privacy" rel="noopener">política de privacidad</a>.
+        </p>
+        <p>
+          No hay ningún otro proveedor: ni analítica, ni publicidad, ni informes de fallos, ni
+          servidores propios.
         </p>
       </section>
 
       <section>
         <h2>6. Permisos del sistema</h2>
+        <p>La App solicita tres permisos, y solo cuando hacen falta:</p>
+        <ul>
+          <li>
+            <strong>Ubicación precisa y en segundo plano:</strong> imprescindible. Sin ella no hay
+            alarma de llegada, porque no podemos saber cuándo entras al radio.
+          </li>
+          <li>
+            <strong>Notificaciones:</strong> para el aviso de llegada.
+          </li>
+          <li>
+            <strong>Micrófono y reconocimiento de voz:</strong> opcional. Solo se piden si tocas el
+            botón de dictado, y el audio se procesa en el dispositivo (ver punto 2). Si los rechazas,
+            el resto de la App funciona con normalidad.
+          </li>
+        </ul>
         <p>
-          La App solicita: ubicación precisa y en segundo plano (imprescindible para la alarma) y
-          notificaciones (para el aviso de llegada). Puedes revocarlos en los ajustes del sistema,
-          entendiendo que la alarma dejará de funcionar.
+          Puedes revocarlos cuando quieras en los ajustes del sistema, entendiendo que sin el de
+          ubicación la alarma dejará de funcionar.
         </p>
       </section>
 
