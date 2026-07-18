@@ -3,7 +3,7 @@
  * Cambiar algo aquí actualiza SEO, sitemap, JSON-LD, footers y páginas legales.
  */
 export const SITE = {
-  url: 'https://cercaya.app',
+  url: 'https://cerca-ya.vercel.app',
   name: 'CercaYa',
   /** Se concatena como "<título> | CercaYa" en las páginas internas. */
   titleDefault: 'CercaYa — Alarma de llegada por GPS para tus viajes',

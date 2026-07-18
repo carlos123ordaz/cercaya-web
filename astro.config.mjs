@@ -1,7 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 
-import sitemap from '@astrojs/sitemap';
+import sitemap, { ChangeFreqEnum } from '@astrojs/sitemap';
 
 import { SITE } from './src/consts';
 
@@ -19,13 +19,13 @@ export default defineConfig({
         const path = new URL(item.url).pathname.replace(/\/$/, '');
         if (path === '') {
           item.priority = 1.0;
-          item.changefreq = 'weekly';
+          item.changefreq = ChangeFreqEnum.WEEKLY;
         } else if (path === '/soporte') {
           item.priority = 0.8;
-          item.changefreq = 'monthly';
+          item.changefreq = ChangeFreqEnum.MONTHLY;
         } else {
           item.priority = 0.3;
-          item.changefreq = 'yearly';
+          item.changefreq = ChangeFreqEnum.YEARLY;
         }
         return item;
       },

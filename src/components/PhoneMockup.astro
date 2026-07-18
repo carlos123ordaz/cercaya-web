@@ -15,23 +15,52 @@
       <path
         d="M30 0V610M120 0V610M255 0V610M0 80H300M0 220H300M0 380H300M0 540H300"
         style="stroke:#141C33;stroke-width:3;fill:none"></path>
+      <!-- Ruta: se dibuja sola con stroke-dashoffset (longitud total ≈ 730). -->
       <path
+        class="route"
         d="M60 540H210V300H120V140H210"
         style="fill:none;stroke:#C8F531;stroke-width:5;stroke-linecap:round;stroke-linejoin:round"
       ></path>
+
+      <!-- Radar del destino: ondas expandiéndose desde el pin. -->
+      <g class="sonar" transform="translate(210 140)">
+        <circle class="sonar__ring" r="52"></circle>
+        <circle class="sonar__ring sonar__ring--2" r="52"></circle>
+      </g>
       <circle
         cx="210"
         cy="140"
         r="52"
+        class="radius"
         style="fill:rgba(200,245,49,.1);stroke:#C8F531;stroke-width:2;stroke-dasharray:6 8"
       ></circle>
+
+      <!-- El <g> exterior posiciona; el interior anima, para no pisar el transform. -->
       <g transform="translate(210 140)">
-        <path
-          d="M0 0C-5.5-8-15-14-15-24A15 15 0 1 1 15-24C15-14 5.5-8 0 0Z"
-          style="fill:#FF6B5E;stroke:#0E1528;stroke-width:2.5"></path>
-        <circle cy="-23.5" r="5" style="fill:#0E1528"></circle>
+        <g class="pin">
+          <path
+            d="M0 0C-5.5-8-15-14-15-24A15 15 0 1 1 15-24C15-14 5.5-8 0 0Z"
+            style="fill:#FF6B5E;stroke:#0E1528;stroke-width:2.5"></path>
+          <circle cy="-23.5" r="5" style="fill:#0E1528"></circle>
+        </g>
       </g>
-      <g transform="translate(60 540)">
+
+      <!-- Punto del usuario, avanzando por la ruta. -->
+      <g class="me" transform="translate(60 540)">
+        <!-- Se anima con <animateTransform> (SMIL) y no con CSS: una animación
+             CSS de `transform` sobre un <g> puede promoverse a capa compositada
+             y dejar de pintarse. SMIL vive dentro del SVG y es determinista.
+             Los keyTimes siguen las esquinas de la ruta (longitudes 150/240/90/160/90). -->
+        <animateTransform
+          attributeName="transform"
+          type="translate"
+          dur="9s"
+          repeatCount="indefinite"
+          calcMode="linear"
+          keyTimes="0; 0.11; 0.29; 0.36; 0.48; 0.55; 0.92; 1"
+          values="60,540; 210,540; 210,300; 120,300; 120,140; 210,140; 210,140; 60,540"
+        ></animateTransform>
+        <circle class="me__halo" r="18"></circle>
         <circle r="10" style="fill:#C8F531;stroke:#0E1528;stroke-width:3"></circle>
         <circle r="3.5" style="fill:#0E1528"></circle>
       </g>
@@ -60,6 +89,17 @@
   </div>
 </div>
 
+<script>
+  // Las animaciones CSS ya respetan prefers-reduced-motion vía global.css, pero
+  // SMIL no se controla desde CSS: hay que pausarlo a mano.
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll<SVGSVGElement>('svg.phone__map').forEach((svg) => {
+      svg.setCurrentTime(5.5); // deja el punto ya llegado al destino
+      svg.pauseAnimations();
+    });
+  }
+</script>
+
 <style>
   .phone-wrap {
     position: relative;
@@ -76,6 +116,91 @@
     background: radial-gradient(circle, rgba(200, 245, 49, 0.14) 0%, rgba(200, 245, 49, 0) 70%);
     pointer-events: none;
   }
+  /* ---------- Animación del mapa ----------
+     Un ciclo de 9s: la ruta se dibuja mientras el punto del usuario la recorre
+     hasta entrar al radio del destino, donde el radar pulsa. Luego reinicia. */
+
+  .route {
+    stroke-dasharray: 730; /* longitud aproximada del path */
+    stroke-dashoffset: 730;
+    animation: drawRoute 9s ease-in-out infinite;
+  }
+  @keyframes drawRoute {
+    0% {
+      stroke-dashoffset: 730;
+    }
+    55%,
+    92% {
+      stroke-dashoffset: 0;
+    }
+    100% {
+      stroke-dashoffset: 730;
+    }
+  }
+
+  /* Halo latiendo: separa el punto del usuario de la línea de la ruta,
+     que termina en la misma posición. */
+  .me__halo {
+    fill: rgba(200, 245, 49, 0.25);
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: halo 1.8s ease-out infinite;
+  }
+  @keyframes halo {
+    0% {
+      transform: scale(0.5);
+      opacity: 0.9;
+    }
+    100% {
+      transform: scale(1.5);
+      opacity: 0;
+    }
+  }
+
+  .sonar__ring {
+    fill: none;
+    stroke: #c8f531;
+    stroke-width: 2;
+    transform-box: fill-box;
+    transform-origin: center;
+    opacity: 0;
+    animation: sonar 2.4s ease-out infinite;
+    animation-delay: 5s; /* arranca cuando el punto llega al destino */
+  }
+  .sonar__ring--2 {
+    animation-delay: 5.9s;
+  }
+  @keyframes sonar {
+    0% {
+      transform: scale(0.35);
+      opacity: 0.85;
+    }
+    70%,
+    100% {
+      transform: scale(2.1);
+      opacity: 0;
+    }
+  }
+
+  .pin {
+    transform-box: fill-box;
+    transform-origin: center bottom;
+    animation: pinDrop 9s ease-in-out infinite;
+  }
+  @keyframes pinDrop {
+    0%,
+    50% {
+      transform: translateY(0) scale(1);
+    }
+    56% {
+      transform: translateY(-8px) scale(1.12);
+    }
+    62%,
+    100% {
+      transform: translateY(0) scale(1);
+    }
+  }
+
   .phone {
     position: relative;
     width: 300px;
@@ -86,6 +211,28 @@
     box-shadow: 0 40px 90px rgba(0, 0, 0, 0.55);
     overflow: hidden;
     flex: none;
+    animation: float 6s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-12px);
+    }
+  }
+
+  /* El círculo del radio gira lentamente: da sensación de "escaneando". */
+  .radius {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: spin 24s linear infinite;
+  }
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
   }
   .phone__notch {
     position: absolute;
@@ -167,11 +314,41 @@
     overflow: hidden;
     margin-top: 10px;
   }
+  /* La barra avanza en sincronía con el punto del mapa (mismo ciclo de 9s). */
   .bar__fill {
     height: 100%;
     width: 72%;
     border-radius: 999px;
     background: var(--lime);
+    animation: fill 9s ease-in-out infinite;
+  }
+  @keyframes fill {
+    0% {
+      width: 6%;
+    }
+    55%,
+    92% {
+      width: 100%;
+    }
+    100% {
+      width: 6%;
+    }
+  }
+
+  /* El resplandor respira junto al radar. */
+  .phone-glow {
+    animation: breathe 6s ease-in-out infinite;
+  }
+  @keyframes breathe {
+    0%,
+    100% {
+      opacity: 0.75;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1.12);
+    }
   }
 
   @media (max-width: 520px) {
