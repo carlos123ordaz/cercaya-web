@@ -1,0 +1,288 @@
+---
+import Base from '../layouts/Base.astro';
+import Faq from '../components/Faq.astro';
+import { CONTACT, FORMSPREE_ENDPOINT, SITE } from '../consts';
+
+const description =
+  'Centro de ayuda de CercaYa: soluciona problemas con la alarma, los permisos de ubicación o la batería, y contáctanos directamente.';
+
+// Guías de troubleshooting: es lo que Apple espera encontrar en una URL de soporte,
+// y evita buena parte de los correos de usuarios.
+const guides = [
+  {
+    title: 'La alarma no sonó',
+    steps: [
+      'Verifica que el permiso de ubicación esté en “Siempre” (Ajustes › CercaYa › Ubicación). Con “Mientras se usa”, iOS detiene el seguimiento al bloquear la pantalla.',
+      'Activa “Ubicación precisa” en la misma pantalla de Ajustes.',
+      'Sube el volumen del timbre y desactiva el modo silencio durante el viaje.',
+      'Comprueba que el modo de bajo consumo no esté activo: limita la actividad en segundo plano.',
+    ],
+  },
+  {
+    title: 'No encuentro mi destino al buscar',
+    steps: [
+      'La búsqueda de lugares necesita conexión a internet; el seguimiento posterior no.',
+      'Prueba con el nombre del terminal o una referencia cercana (un cruce, un centro comercial).',
+      'Si el lugar no existe en el mapa, toca directamente sobre el punto del mapa para fijarlo manualmente.',
+    ],
+  },
+  {
+    title: 'La app consume mucha batería',
+    steps: [
+      'Detén el viaje al llegar: si queda activo, el GPS sigue trabajando.',
+      'Usa un radio de aviso más amplio: la app consulta el GPS con menos frecuencia cuando estás lejos.',
+      'Mantén iOS y la app actualizados.',
+    ],
+  },
+  {
+    title: 'Quiero borrar mi historial',
+    steps: [
+      'Abre CercaYa › Historial y desliza el viaje que quieras eliminar.',
+      'Para borrarlo todo, desinstala la app: los datos viven solo en tu dispositivo y se eliminan con ella.',
+    ],
+  },
+];
+
+const supportSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ContactPage',
+  name: `Soporte de ${SITE.name}`,
+  description,
+  url: new URL('/soporte', SITE.url).href,
+};
+---
+
+<Base variant="simple" title={`Soporte | ${SITE.name}`} description={description} schema={supportSchema}>
+  <div class="wrap wrap--narrow" style="padding-block:64px 90px">
+    <p class="eyebrow">Ayuda</p>
+    <h1 class="page-title">Soporte de CercaYa</h1>
+    <p class="page-date">Respondemos en un plazo máximo de 48 horas hábiles.</p>
+
+    <div class="callout">
+      ¿Necesitas ayuda rápido? Escríbenos a
+      <a href={`mailto:${CONTACT.soporte}`}>{CONTACT.soporte}</a> indicando tu modelo de iPhone y la
+      versión de iOS. Con eso resolvemos la mayoría de casos en el primer correo.
+    </div>
+
+    <!-- GUÍAS -->
+    <section class="block">
+      <h2 class="block__title">Problemas frecuentes</h2>
+      <div class="guides">
+        {
+          guides.map((g) => (
+            <details class="guide">
+              <summary>
+                <span>{g.title}</span>
+                <span class="guide__plus" aria-hidden="true">
+                  +
+                </span>
+              </summary>
+              <ol>
+                {g.steps.map((s) => (
+                  <li>{s}</li>
+                ))}
+              </ol>
+            </details>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="block">
+      <h2 class="block__title">Preguntas frecuentes</h2>
+      <Faq />
+    </section>
+
+    <!-- CONTACTO -->
+    <section class="block">
+      <h2 class="block__title">Escríbenos</h2>
+
+      {
+        FORMSPREE_ENDPOINT ? (
+          <form class="form" action={FORMSPREE_ENDPOINT} method="POST">
+            <label>
+              <span>Tu correo</span>
+              <input type="email" name="email" required autocomplete="email" placeholder="tu@correo.com" />
+            </label>
+            <label>
+              <span>Asunto</span>
+              <select name="asunto">
+                <option>La alarma no sonó</option>
+                <option>Problema con permisos o ubicación</option>
+                <option>Consumo de batería</option>
+                <option>Privacidad y datos</option>
+                <option>Sugerencia o idea</option>
+                <option>Otro</option>
+              </select>
+            </label>
+            <label>
+              <span>Cuéntanos qué pasó</span>
+              <textarea
+                name="mensaje"
+                rows="6"
+                required
+                placeholder="Incluye tu modelo de iPhone, la versión de iOS y qué esperabas que ocurriera."
+              />
+            </label>
+            {/* Campo trampa anti-spam: los bots lo rellenan, las personas no lo ven. */}
+            <input type="text" name="_gotcha" class="gotcha" tabindex="-1" autocomplete="off" />
+            <button type="submit" class="btn btn--primary">
+              Enviar mensaje
+            </button>
+            <p class="form__note">
+              Al enviar aceptas nuestra <a href="/privacidad">política de privacidad</a>. Usamos tu
+              correo solo para responderte.
+            </p>
+          </form>
+        ) : (
+          <div class="card">
+            <p style="margin:0 0 14px;font-weight:700;color:var(--ink-muted)">
+              Escríbenos por correo y te respondemos en menos de 48 horas hábiles:
+            </p>
+            <a href={`mailto:${CONTACT.soporte}`} class="btn btn--primary">
+              {CONTACT.soporte}
+            </a>
+            <p style="margin:16px 0 0;font-size:14px;font-weight:600;color:var(--ink-faint)">
+              {/* Cuando pegues tu endpoint en src/consts.ts aparece aquí el formulario. */}
+              Para acelerar la respuesta, incluye tu modelo de iPhone y la versión de iOS.
+            </p>
+          </div>
+        )
+      }
+    </section>
+
+    <!-- INFO LEGAL -->
+    <section class="block">
+      <h2 class="block__title">Otros enlaces</h2>
+      <ul class="links">
+        <li><a href="/privacidad">Política de privacidad</a></li>
+        <li><a href="/terminos">Términos y condiciones</a></li>
+        <li>
+          Consultas de privacidad: <a href={`mailto:${CONTACT.privacidad}`}>{CONTACT.privacidad}</a>
+        </li>
+      </ul>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .block {
+    margin-top: 52px;
+  }
+  .block__title {
+    font-size: 24px;
+    margin: 0 0 4px;
+  }
+
+  .guides {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 22px;
+  }
+  .guide {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    overflow: hidden;
+  }
+  .guide summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 19px 22px;
+    cursor: pointer;
+    font-size: 16.5px;
+    font-weight: 800;
+    list-style: none;
+  }
+  .guide summary::-webkit-details-marker {
+    display: none;
+  }
+  .guide__plus {
+    flex: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 999px;
+    background: rgba(200, 245, 49, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--lime);
+    font-size: 17px;
+    font-weight: 900;
+    transition: transform 0.2s;
+  }
+  .guide[open] .guide__plus {
+    transform: rotate(45deg);
+  }
+  .guide ol {
+    margin: 0;
+    padding: 0 22px 20px 42px;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink-muted);
+    font-weight: 600;
+  }
+  .guide li + li {
+    margin-top: 8px;
+  }
+
+  .form {
+    margin-top: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .form label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 14.5px;
+    font-weight: 800;
+  }
+  .form input,
+  .form select,
+  .form textarea {
+    font-family: inherit;
+    font-size: 15.5px;
+    font-weight: 600;
+    color: var(--ink);
+    background: var(--bg-card);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 14px;
+    padding: 14px 16px;
+    width: 100%;
+  }
+  .form textarea {
+    resize: vertical;
+  }
+  .form input::placeholder,
+  .form textarea::placeholder {
+    color: rgba(220, 228, 255, 0.35);
+  }
+  .form button {
+    align-self: flex-start;
+  }
+  .gotcha {
+    position: absolute;
+    left: -9999px;
+  }
+  .form__note {
+    margin: 0;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--ink-faint);
+  }
+
+  .links {
+    margin: 20px 0 0;
+    padding-left: 20px;
+    font-size: 15.5px;
+    font-weight: 700;
+    line-height: 1.9;
+    color: var(--ink-muted);
+  }
+</style>

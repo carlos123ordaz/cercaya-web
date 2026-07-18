@@ -1,0 +1,187 @@
+---
+// Ilustración decorativa de la pantalla de viaje: es SVG inline, no una
+// captura real, así que se marca aria-hidden para los lectores de pantalla.
+---
+
+<div class="phone-wrap" aria-hidden="true">
+  <div class="phone-glow"></div>
+  <div class="phone">
+    <div class="phone__notch"></div>
+    <svg width="300" height="610" viewBox="0 0 300 610" class="phone__map">
+      <rect width="300" height="610" fill="#0E1528"></rect>
+      <path
+        d="M60 0V610M210 0V610M0 140H300M0 300H300M0 460H300"
+        style="stroke:#1D2947;stroke-width:7;fill:none"></path>
+      <path
+        d="M30 0V610M120 0V610M255 0V610M0 80H300M0 220H300M0 380H300M0 540H300"
+        style="stroke:#141C33;stroke-width:3;fill:none"></path>
+      <path
+        d="M60 540H210V300H120V140H210"
+        style="fill:none;stroke:#C8F531;stroke-width:5;stroke-linecap:round;stroke-linejoin:round"
+      ></path>
+      <circle
+        cx="210"
+        cy="140"
+        r="52"
+        style="fill:rgba(200,245,49,.1);stroke:#C8F531;stroke-width:2;stroke-dasharray:6 8"
+      ></circle>
+      <g transform="translate(210 140)">
+        <path
+          d="M0 0C-5.5-8-15-14-15-24A15 15 0 1 1 15-24C15-14 5.5-8 0 0Z"
+          style="fill:#FF6B5E;stroke:#0E1528;stroke-width:2.5"></path>
+        <circle cy="-23.5" r="5" style="fill:#0E1528"></circle>
+      </g>
+      <g transform="translate(60 540)">
+        <circle r="10" style="fill:#C8F531;stroke:#0E1528;stroke-width:3"></circle>
+        <circle r="3.5" style="fill:#0E1528"></circle>
+      </g>
+    </svg>
+
+    <div class="phone__pill">
+      <span class="dot"></span>
+      <span>Alarma activa</span>
+    </div>
+
+    <div class="phone__card">
+      <div class="lbl">En camino a</div>
+      <div class="dest">Terminal Plaza Norte</div>
+      <div class="row">
+        <div>
+          <div class="lbl">Distancia</div>
+          <div class="big">3,2 km</div>
+        </div>
+        <div style="padding-bottom:2px">
+          <div class="lbl">Llegas en</div>
+          <div class="eta">≈ 6 min</div>
+        </div>
+      </div>
+      <div class="bar"><div class="bar__fill"></div></div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .phone-wrap {
+    position: relative;
+    display: flex;
+    justify-content: center;
+  }
+  .phone-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 420px;
+    height: 420px;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(200, 245, 49, 0.14) 0%, rgba(200, 245, 49, 0) 70%);
+    pointer-events: none;
+  }
+  .phone {
+    position: relative;
+    width: 300px;
+    height: 610px;
+    border-radius: 46px;
+    background: #0b1020;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 40px 90px rgba(0, 0, 0, 0.55);
+    overflow: hidden;
+    flex: none;
+  }
+  .phone__notch {
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 96px;
+    height: 26px;
+    border-radius: 999px;
+    background: #05070d;
+    z-index: 3;
+  }
+  .phone__map {
+    position: absolute;
+    inset: 0;
+    display: block;
+  }
+  .phone__pill {
+    position: absolute;
+    top: 64px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(19, 27, 51, 0.92);
+    border: 1px solid rgba(200, 245, 49, 0.35);
+    border-radius: 999px;
+    padding: 8px 14px;
+    white-space: nowrap;
+    font-size: 11px;
+    font-weight: 800;
+  }
+  .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: var(--lime);
+    animation: omPulse 1.4s ease-in-out infinite;
+  }
+  .phone__card {
+    position: absolute;
+    left: 14px;
+    right: 14px;
+    bottom: 14px;
+    background: rgba(16, 23, 44, 0.97);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 22px;
+    padding: 16px 16px 18px;
+  }
+  .lbl {
+    font-size: 10.5px;
+    font-weight: 800;
+    color: var(--ink-faint);
+  }
+  .dest {
+    font-size: 15px;
+    font-weight: 900;
+  }
+  .row {
+    display: flex;
+    align-items: flex-end;
+    gap: 16px;
+    margin-top: 8px;
+  }
+  .big {
+    font-size: 23px;
+    font-weight: 900;
+  }
+  .eta {
+    font-size: 14px;
+    font-weight: 900;
+    color: var(--lime);
+  }
+  .bar {
+    height: 6px;
+    border-radius: 999px;
+    background: #1a2444;
+    overflow: hidden;
+    margin-top: 10px;
+  }
+  .bar__fill {
+    height: 100%;
+    width: 72%;
+    border-radius: 999px;
+    background: var(--lime);
+  }
+
+  @media (max-width: 520px) {
+    .phone {
+      width: 260px;
+      height: 528px;
+    }
+    .phone__map {
+      width: 260px;
+      height: 528px;
+    }
+  }
+</style>

@@ -1,0 +1,478 @@
+---
+import Base from '../layouts/Base.astro';
+import PhoneMockup from '../components/PhoneMockup.astro';
+import StoreButtons from '../components/StoreButtons.astro';
+import Faq from '../components/Faq.astro';
+import { FAQS } from '../data/faq';
+import { SITE, CONTACT } from '../consts';
+
+const benefits = [
+  {
+    n: '01',
+    title: 'Alarma que sí despierta',
+    text: 'Sonido a pantalla completa y vibración continua hasta que la detienes. Nada de una notificación silenciosa que se pierde entre otras.',
+  },
+  {
+    n: '02',
+    title: 'Radio a tu medida',
+    text: 'Arrastra el círculo en el mapa para decidir a qué distancia despertar: desde 200 m hasta 2,5 km, según lo que tardes en alistarte.',
+  },
+  {
+    n: '03',
+    title: 'Historial con un toque',
+    text: 'Tus viajes quedan guardados en el teléfono. Repite la misma ruta y radio sin volver a configurar nada.',
+  },
+  {
+    n: '04',
+    title: 'Favoritos fijados',
+    text: 'Casa, terminal, trabajo: fija tus destinos frecuentes y actívalos desde la pantalla de inicio.',
+  },
+  {
+    n: '05',
+    title: 'Funciona sin señal',
+    text: 'El seguimiento usa el GPS del teléfono, no internet. Perfecto para carreteras donde la cobertura desaparece.',
+  },
+  {
+    n: '06',
+    title: 'Tus datos se quedan aquí',
+    text: 'La ubicación se procesa en tu dispositivo para calcular la distancia. No la guardamos en servidores ni la vendemos.',
+  },
+];
+
+// --- JSON-LD: ayuda a Google a entender qué es la app y habilita rich results ---
+const appSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'MobileApplication',
+  name: SITE.name,
+  description: SITE.description,
+  applicationCategory: 'TravelApplication',
+  operatingSystem: 'iOS',
+  url: SITE.url,
+  inLanguage: 'es',
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
+  },
+  // Sin aggregateRating a propósito: la app todavía no tiene reseñas reales.
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: FAQS.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+
+const orgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: SITE.name,
+  url: SITE.url,
+  logo: new URL('/favicon.svg', SITE.url).href,
+  contactPoint: {
+    '@type': 'ContactPoint',
+    contactType: 'customer support',
+    email: CONTACT.soporte,
+    availableLanguage: ['Spanish'],
+  },
+};
+---
+
+<Base
+  title={SITE.titleDefault}
+  description={SITE.description}
+  schema={[appSchema, faqSchema, orgSchema]}
+>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero__inner">
+      <div>
+        <div class="badge">
+          <span class="badge__dot"></span>
+          Tu alarma de llegada
+        </div>
+        <h1>Duérmete en el bus.<br /><span>Nosotros te despertamos.</span></h1>
+        <p class="lede">
+          Elige tu destino, define a qué distancia quieres el aviso y viaja tranquilo. CercaYa
+          vigila tu ubicación y suena una alarma cuando estás por llegar.
+        </p>
+        <div class="hero__cta">
+          <a href="#descarga" class="btn btn--primary">
+            Descargar gratis
+            <svg
+              width="17"
+              height="17"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              style="fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round"
+            >
+              <path d="M5 12h14M13 6l6 6-6 6"></path>
+            </svg>
+          </a>
+          <a href="#como" class="btn btn--ghost">Ver cómo funciona</a>
+        </div>
+
+        <ul class="facts">
+          <li><strong>Sin datos</strong><span>el seguimiento usa solo el GPS</span></li>
+          <li><strong>Gratis</strong><span>viajes y alarmas ilimitados</span></li>
+          <li><strong>Sin cuenta</strong><span>no necesitas registrarte</span></li>
+        </ul>
+      </div>
+
+      <PhoneMockup />
+    </div>
+  </section>
+
+  <!-- CÓMO FUNCIONA -->
+  <section id="como" class="section section--alt">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Cómo funciona</p>
+        <h2>Tres pasos y a dormir</h2>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <div class="icon-badge">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              style="fill:none;stroke:#C8F531;stroke-width:2.3;stroke-linecap:round"
+            >
+              <circle cx="11" cy="11" r="7"></circle><path d="M16.6 16.6L21 21"></path>
+            </svg>
+          </div>
+          <p class="step">PASO 1</p>
+          <h3>Busca tu destino</h3>
+          <p class="card__text">
+            Escribe el terminal, paradero o cruce donde bajas. También puedes repetir un viaje desde
+            tu historial con un toque.
+          </p>
+        </div>
+        <div class="card">
+          <div class="icon-badge">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              style="fill:none;stroke:#C8F531;stroke-width:2.2"
+            >
+              <circle cx="12" cy="12" r="8" style="stroke-dasharray:3 4"></circle>
+              <circle cx="12" cy="12" r="2.5" style="fill:#C8F531;stroke:none"></circle>
+            </svg>
+          </div>
+          <p class="step">PASO 2</p>
+          <h3>Define el radio de aviso</h3>
+          <p class="card__text">
+            Arrastra el círculo en el mapa: 500 m, 1 km, lo que necesites para alistarte antes de
+            bajar. Confirma y listo.
+          </p>
+        </div>
+        <div class="card">
+          <div class="icon-badge" style="background:rgba(255,107,94,.13)">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              style="fill:none;stroke:#FF6B5E;stroke-width:2.3;stroke-linejoin:round"
+            >
+              <path d="M6 16v-5a6 6 0 1 1 12 0v5l1.6 2.4H4.4z"></path>
+              <path d="M10 21h4" style="stroke-linecap:round"></path>
+            </svg>
+          </div>
+          <p class="step">PASO 3</p>
+          <h3>Duerme tranquilo</h3>
+          <p class="card__text">
+            CercaYa sigue tu ubicación en segundo plano y dispara la alarma con sonido y vibración
+            al entrar al radio.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BENEFICIOS -->
+  <section id="beneficios" class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Beneficios</p>
+        <h2>Hecho para viajes largos</h2>
+      </div>
+      <div class="grid-3">
+        {
+          benefits.map((b) => (
+            <div class="benefit">
+              <div class="benefit__n">{b.n}</div>
+              <div>
+                <h3>{b.title}</h3>
+                <p>{b.text}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- PRIVACIDAD -->
+  <section class="section section--alt">
+    <div class="wrap section-head">
+      <p class="eyebrow">Privacidad</p>
+      <h2>Tu ubicación no sale de tu teléfono</h2>
+      <p>
+        CercaYa calcula la distancia al destino en el propio dispositivo. No guardamos tu recorrido
+        en servidores, no construimos perfiles publicitarios y no compartimos tu historial de
+        viajes. Puedes leer el detalle completo en la <a href="/privacidad"
+          >política de privacidad</a
+        >.
+      </p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="section">
+    <div class="wrap" style="max-width:760px">
+      <div class="section-head">
+        <p class="eyebrow">FAQ</p>
+        <h2>Preguntas frecuentes</h2>
+      </div>
+      <Faq />
+      <p class="faq__more">
+        ¿No encuentras tu respuesta? Escríbenos desde la <a href="/soporte">página de soporte</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- CTA DESCARGA -->
+  <section id="descarga" class="cta-section">
+    <div class="wrap">
+      <div class="cta">
+        <div class="cta__glow"></div>
+        <div class="cta__icon">
+          <svg
+            width="36"
+            height="36"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+            style="fill:none;stroke:#0B1020;stroke-width:2.3;stroke-linejoin:round"
+          >
+            <path d="M6 16v-5a6 6 0 1 1 12 0v5l1.6 2.4H4.4z"></path>
+            <path d="M10 21h4" style="stroke-linecap:round"></path>
+          </svg>
+        </div>
+        <h2>Tu próximo viaje,<br />sin miedo a pasarte</h2>
+        <p>Descarga CercaYa gratis y despierta siempre en el punto exacto.</p>
+        <StoreButtons />
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero__inner {
+    padding: 84px 24px 60px;
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 48px;
+    align-items: center;
+  }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(200, 245, 49, 0.1);
+    border: 1px solid rgba(200, 245, 49, 0.3);
+    border-radius: 999px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--lime);
+  }
+  .badge__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--lime);
+    animation: omPulse 1.6s ease-in-out infinite;
+  }
+  h1 {
+    margin: 18px 0 0;
+    font-size: clamp(34px, 6vw, 56px);
+    line-height: 1.06;
+  }
+  h1 span {
+    color: var(--lime);
+  }
+  .lede {
+    margin: 20px 0 0;
+    font-size: 18px;
+    line-height: 1.6;
+    color: rgba(220, 228, 255, 0.7);
+    font-weight: 600;
+    max-width: 480px;
+    text-wrap: pretty;
+  }
+  .hero__cta {
+    display: flex;
+    gap: 14px;
+    margin-top: 32px;
+    flex-wrap: wrap;
+  }
+
+  .facts {
+    display: flex;
+    gap: 28px;
+    margin: 38px 0 0;
+    padding: 0;
+    list-style: none;
+    flex-wrap: wrap;
+  }
+  .facts strong {
+    display: block;
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--lime);
+  }
+  .facts span {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: rgba(220, 228, 255, 0.55);
+    max-width: 150px;
+  }
+
+  .step {
+    margin: 18px 0 0;
+    font-size: 13px;
+    font-weight: 900;
+    color: rgba(220, 228, 255, 0.45);
+  }
+  .card h3 {
+    margin: 6px 0 8px;
+    font-size: 20px;
+  }
+  .card__text {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--ink-muted);
+    font-weight: 600;
+  }
+
+  .benefit {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    padding: 24px;
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+  }
+  .benefit__n {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    background: rgba(200, 245, 49, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    font-size: 18px;
+    color: var(--lime);
+    font-weight: 900;
+  }
+  .benefit h3 {
+    margin: 2px 0 6px;
+    font-size: 17px;
+  }
+  .benefit p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.55;
+    color: rgba(220, 228, 255, 0.62);
+    font-weight: 600;
+  }
+
+  .faq__more {
+    margin: 26px 0 0;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink-muted);
+  }
+
+  .cta-section {
+    padding: 0 0 90px;
+  }
+  .cta {
+    position: relative;
+    background: linear-gradient(135deg, #131f0a, #0e1528);
+    border: 1px solid rgba(200, 245, 49, 0.28);
+    border-radius: 34px;
+    padding: 64px 40px;
+    text-align: center;
+    overflow: hidden;
+  }
+  .cta__glow {
+    position: absolute;
+    top: -120px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 520px;
+    height: 320px;
+    background: radial-gradient(circle, rgba(200, 245, 49, 0.18), rgba(200, 245, 49, 0) 70%);
+    pointer-events: none;
+  }
+  .cta__icon {
+    position: relative;
+    width: 74px;
+    height: 74px;
+    margin: 0 auto;
+    border-radius: 24px;
+    background: var(--lime);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 14px 40px rgba(200, 245, 49, 0.3);
+  }
+  .cta h2 {
+    position: relative;
+    margin: 24px 0 0;
+    font-size: clamp(28px, 5vw, 40px);
+    line-height: 1.1;
+  }
+  .cta p {
+    position: relative;
+    margin: 14px auto 0;
+    max-width: 420px;
+    font-size: 16.5px;
+    line-height: 1.6;
+    color: rgba(220, 228, 255, 0.7);
+    font-weight: 600;
+  }
+  .cta :global(.stores) {
+    position: relative;
+    margin-top: 32px;
+  }
+
+  @media (max-width: 900px) {
+    .hero__inner {
+      grid-template-columns: 1fr;
+      padding-top: 56px;
+      gap: 40px;
+    }
+    .lede {
+      max-width: none;
+    }
+    .cta {
+      padding: 48px 24px;
+    }
+  }
+</style>

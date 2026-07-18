@@ -1,0 +1,48 @@
+---
+interface Props {
+  /** Tamaño del cuadro del icono en px. */
+  size?: number;
+  /** Tamaño del texto "CercaYa" en px. */
+  text?: number;
+}
+const { size = 38, text = 20 } = Astro.props;
+---
+
+<span class="logo">
+  <span class="logo__mark" style={`width:${size}px;height:${size}px`}>
+    <svg
+      width={size * 0.53}
+      height={size * 0.53}
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      style="fill:none;stroke:#0B1020;stroke-width:2.4;stroke-linejoin:round"
+    >
+      <path d="M6 16v-5a6 6 0 1 1 12 0v5l1.6 2.4H4.4z"></path>
+      <path d="M10 21h4" style="stroke-linecap:round"></path>
+    </svg>
+  </span>
+  <span class="logo__text" style={`font-size:${text}px`}>
+    Cerca<span style="color:var(--lime)">Ya</span>
+  </span>
+</span>
+
+<style>
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--ink);
+  }
+  .logo__mark {
+    border-radius: 34%;
+    background: var(--lime);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+  }
+  .logo__text {
+    font-weight: 900;
+    white-space: nowrap;
+  }
+</style>

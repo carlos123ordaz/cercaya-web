@@ -1,0 +1,63 @@
+---
+import Logo from './Logo.astro';
+import { SITE } from '../consts';
+
+interface Props {
+  narrow?: boolean;
+}
+const { narrow = false } = Astro.props;
+const year = new Date().getFullYear();
+---
+
+<footer class="ftr">
+  <div class={`wrap ftr__inner ${narrow ? 'wrap--narrow' : ''}`}>
+    <div class="ftr__brand">
+      <Logo size={30} text={15} />
+      <span class="ftr__copy">© {year} {SITE.name}. Todos los derechos reservados.</span>
+    </div>
+    <nav class="ftr__nav" aria-label="Enlaces legales y de soporte">
+      <a href="/soporte">Soporte</a>
+      <a href="/terminos">Términos y condiciones</a>
+      <a href="/privacidad">Política de privacidad</a>
+    </nav>
+  </div>
+</footer>
+
+<style>
+  .ftr {
+    border-top: 1px solid var(--line);
+    background: var(--bg-footer);
+  }
+  .ftr__inner {
+    padding-block: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .ftr__brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .ftr__copy {
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(220, 228, 255, 0.4);
+  }
+  .ftr__nav {
+    display: flex;
+    gap: 24px;
+    font-size: 14px;
+    font-weight: 800;
+    flex-wrap: wrap;
+  }
+  .ftr__nav a {
+    color: rgba(220, 228, 255, 0.7);
+  }
+  .ftr__nav a:hover {
+    color: var(--ink);
+  }
+</style>

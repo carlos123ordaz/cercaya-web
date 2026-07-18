@@ -1,0 +1,112 @@
+---
+import Base from '../layouts/Base.astro';
+import { CONTACT, LEGAL_UPDATED, SITE } from '../consts';
+---
+
+<Base
+  variant="simple"
+  title={`Términos y condiciones | ${SITE.name}`}
+  description="Términos y condiciones de uso de CercaYa, la app de alarma de llegada por proximidad."
+>
+  <div class="wrap wrap--narrow" style="padding-block:64px 90px">
+    <p class="eyebrow">Legal</p>
+    <h1 class="page-title">Términos y condiciones</h1>
+    <p class="page-date">Última actualización: {LEGAL_UPDATED}</p>
+
+    <div class="prose">
+      <section>
+        <h2>1. Aceptación de los términos</h2>
+        <p>
+          Al descargar, instalar o usar la aplicación CercaYa (la “App”), aceptas estos Términos y
+          condiciones. Si no estás de acuerdo con ellos, no uses la App.
+        </p>
+      </section>
+
+      <section>
+        <h2>2. Descripción del servicio</h2>
+        <p>
+          CercaYa es una aplicación de alarma por proximidad: te permite elegir un destino, definir
+          un radio de aviso y recibir una alarma sonora y vibratoria cuando tu dispositivo entra en
+          ese radio. La App también guarda un historial local de tus viajes y destinos favoritos para
+          facilitar su reutilización.
+        </p>
+      </section>
+
+      <section>
+        <h2>3. Uso responsable — aviso importante</h2>
+        <p>
+          La App es una herramienta de apoyo y
+          <strong>no garantiza que despiertes ni que bajes en el punto correcto</strong>. La precisión
+          depende del GPS del dispositivo, su batería, el volumen configurado, las restricciones del sistema
+          operativo y otros factores fuera de nuestro control. No uses la App como único medio para decisiones
+          críticas de viaje y mantén precauciones razonables. CercaYa no se responsabiliza por destinos
+          pasados, pérdidas de conexiones de transporte ni daños derivados de confiar exclusivamente en
+          la alarma.
+        </p>
+      </section>
+
+      <section>
+        <h2>4. Requisitos y permisos</h2>
+        <p>
+          Para funcionar, la App requiere permisos de ubicación (incluida la ubicación en segundo
+          plano) y notificaciones. Eres responsable de conceder y mantener estos permisos; sin ellos
+          la alarma puede no activarse.
+        </p>
+      </section>
+
+      <section>
+        <h2>5. Servicios de terceros</h2>
+        <p>
+          La búsqueda de destinos y los mapas usan servicios de terceros (como Google Maps Platform y
+          su API de Places), sujetos a sus propios términos y políticas. CercaYa no controla ni
+          garantiza la exactitud de los datos de lugares proporcionados por dichos servicios.
+        </p>
+      </section>
+
+      <section>
+        <h2>6. Licencia de uso</h2>
+        <p>
+          Te otorgamos una licencia personal, limitada, no exclusiva e intransferible para usar la
+          App en tus dispositivos. No puedes copiar, modificar, distribuir, vender ni realizar
+          ingeniería inversa de la App, salvo lo permitido por la ley aplicable.
+        </p>
+      </section>
+
+      <section>
+        <h2>7. Disponibilidad y cambios</h2>
+        <p>
+          Podemos actualizar, modificar o descontinuar la App o partes de ella en cualquier momento,
+          así como actualizar estos términos. Los cambios relevantes se comunicarán dentro de la App;
+          el uso continuado tras un cambio implica su aceptación.
+        </p>
+      </section>
+
+      <section>
+        <h2>8. Limitación de responsabilidad</h2>
+        <p>
+          En la máxima medida permitida por la ley, la App se ofrece “tal cual” y sin garantías de
+          ningún tipo. CercaYa no será responsable por daños indirectos, incidentales o consecuentes
+          derivados del uso o imposibilidad de uso de la App.
+        </p>
+      </section>
+
+      <section>
+        <h2>9. Descarga desde la App Store</h2>
+        <p>
+          Estos términos son un acuerdo entre tú y CercaYa, no con Apple. Apple no tiene obligación
+          alguna de prestar servicios de mantenimiento o soporte respecto de la App, y no es
+          responsable de atender reclamaciones relacionadas con ella. Apple y sus subsidiarias son
+          terceros beneficiarios de estos términos y podrán exigir su cumplimiento frente a ti.
+        </p>
+      </section>
+
+      <section>
+        <h2>10. Contacto</h2>
+        <p>
+          Para consultas sobre estos términos, escríbenos a
+          <a href={`mailto:${CONTACT.legal}`}>{CONTACT.legal}</a>.
+        </p>
+      </section>
+    </div>
+  </div>
+</Base>

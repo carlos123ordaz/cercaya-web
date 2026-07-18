@@ -1,0 +1,84 @@
+---
+import Logo from './Logo.astro';
+
+interface Props {
+  /** En páginas internas solo mostramos "volver al inicio". */
+  variant?: 'full' | 'simple';
+}
+const { variant = 'full' } = Astro.props;
+---
+
+<header class="hdr">
+  <div class={`wrap hdr__inner ${variant === 'simple' ? 'wrap--narrow' : ''}`}>
+    <a href="/" aria-label="CercaYa, ir al inicio"><Logo /></a>
+
+    {
+      variant === 'full' ? (
+        <nav class="hdr__nav" aria-label="Principal">
+          <a href="/#como">Cómo funciona</a>
+          <a href="/#beneficios">Beneficios</a>
+          <a href="/#faq">FAQ</a>
+          <a href="/soporte">Soporte</a>
+          <a href="/#descarga" class="hdr__cta">Descargar</a>
+        </nav>
+      ) : (
+        <a href="/" class="hdr__back">← Volver al inicio</a>
+      )
+    }
+  </div>
+</header>
+
+<style>
+  .hdr {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: rgba(7, 11, 22, 0.85);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .hdr__inner {
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  .hdr__nav {
+    display: flex;
+    align-items: center;
+    gap: 26px;
+    font-size: 14.5px;
+    font-weight: 800;
+  }
+  .hdr__nav a {
+    color: rgba(220, 228, 255, 0.75);
+  }
+  .hdr__nav a:hover {
+    color: var(--ink);
+  }
+  .hdr__cta {
+    background: var(--lime);
+    color: #0b1020 !important;
+    padding: 11px 20px;
+    border-radius: 999px;
+  }
+  .hdr__cta:hover {
+    background: var(--lime-hover);
+  }
+  .hdr__back {
+    font-size: 14px;
+    font-weight: 800;
+    color: rgba(220, 228, 255, 0.75);
+  }
+
+  /* En móvil escondemos los anchors de sección y dejamos lo accionable. */
+  @media (max-width: 720px) {
+    .hdr__nav a:not(.hdr__cta):not([href='/soporte']) {
+      display: none;
+    }
+    .hdr__nav {
+      gap: 16px;
+    }
+  }
+</style>

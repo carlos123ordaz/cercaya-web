@@ -1,0 +1,56 @@
+---
+import SEO from '../components/SEO.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE } from '../consts';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  noindex?: boolean;
+  schema?: Record<string, unknown> | Record<string, unknown>[];
+  /** 'simple' = header/footer angostos, para legales y soporte. */
+  variant?: 'full' | 'simple';
+}
+
+const {
+  title,
+  description,
+  noindex = false,
+  schema,
+  variant = 'full',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang={SITE.lang}>
+  <head>
+    <SEO title={title} description={description} noindex={noindex} schema={schema} />
+  </head>
+  <body>
+    <a href="#main" class="skip">Saltar al contenido</a>
+    <Header variant={variant} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer narrow={variant === 'simple'} />
+
+    <style>
+      .skip {
+        position: absolute;
+        left: -9999px;
+        top: 0;
+        background: var(--lime);
+        color: #0b1020;
+        font-weight: 900;
+        padding: 12px 20px;
+        border-radius: 0 0 12px 0;
+        z-index: 50;
+      }
+      .skip:focus {
+        left: 0;
+      }
+    </style>
+  </body>
+</html>

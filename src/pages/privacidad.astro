@@ -1,0 +1,136 @@
+---
+import Base from '../layouts/Base.astro';
+import { CONTACT, LEGAL_UPDATED, SITE } from '../consts';
+---
+
+<Base
+  variant="simple"
+  title={`Política de privacidad | ${SITE.name}`}
+  description="Cómo trata CercaYa tu ubicación: se procesa en tu dispositivo para calcular la distancia al destino. No la vendemos ni la compartimos."
+>
+  <div class="wrap wrap--narrow" style="padding-block:64px 90px">
+    <p class="eyebrow">Legal</p>
+    <h1 class="page-title">Política de privacidad</h1>
+    <p class="page-date">Última actualización: {LEGAL_UPDATED}</p>
+
+    <div class="callout">
+      En resumen: tu ubicación se procesa en tu teléfono para calcular la distancia a tu destino. No
+      vendemos tus datos ni rastreamos tus movimientos con fines publicitarios.
+    </div>
+
+    <div class="prose">
+      <section>
+        <h2>1. Responsable del tratamiento</h2>
+        <p>
+          CercaYa (la “App”) es responsable del tratamiento de los datos descritos en esta política.
+          Puedes contactarnos en <a href={`mailto:${CONTACT.privacidad}`}>{CONTACT.privacidad}</a>.
+        </p>
+      </section>
+
+      <section>
+        <h2>2. Datos que tratamos</h2>
+        <p>
+          <strong>Ubicación en tiempo real (incluido segundo plano):</strong> se usa exclusivamente en
+          tu dispositivo para mostrar tu posición en el mapa y calcular la distancia al destino que elegiste.
+          No se almacena en nuestros servidores.
+        </p>
+        <p>
+          <strong>Destinos, radios e historial de viajes:</strong> se guardan localmente en tu dispositivo
+          para que puedas repetir viajes y fijar favoritos. Puedes borrarlos cuando quieras desde la App.
+        </p>
+        <p>
+          <strong>Búsquedas de lugares:</strong> el texto que escribes al buscar un destino se envía al
+          proveedor de mapas (Google Maps Platform / API de Places) para obtener resultados, conforme
+          a la política de privacidad de Google.
+        </p>
+      </section>
+
+      <section>
+        <h2>3. Finalidades y base legal</h2>
+        <p>
+          Usamos estos datos únicamente para: (a) activar la alarma cuando entras al radio
+          configurado; (b) mostrar tu posición y la ruta en el mapa; (c) mantener tu historial y
+          favoritos en el dispositivo; y (d) mejorar la estabilidad de la App mediante métricas
+          anónimas de errores.
+        </p>
+        <p>
+          La base legal es la <strong>ejecución del servicio que solicitas</strong> (la alarma de
+          llegada) y, para las métricas de estabilidad, nuestro interés legítimo en mantener la App
+          funcionando. El acceso a la ubicación siempre requiere tu consentimiento explícito a través
+          del diálogo del sistema operativo, que puedes retirar en cualquier momento.
+        </p>
+      </section>
+
+      <section>
+        <h2>4. Lo que NO hacemos</h2>
+        <p>
+          No vendemos ni alquilamos tus datos. No construimos perfiles publicitarios con tu
+          ubicación. No compartimos tu historial de viajes con terceros. No accedemos a tus
+          contactos, fotos ni mensajes.
+        </p>
+      </section>
+
+      <section>
+        <h2>5. Terceros</h2>
+        <p>
+          La App usa Google Maps Platform (mapas y búsqueda de lugares). El tratamiento que Google
+          haga de las consultas se rige por su propia política de privacidad. Las métricas anónimas
+          de fallos pueden procesarse mediante servicios estándar de estabilidad de aplicaciones.
+        </p>
+      </section>
+
+      <section>
+        <h2>6. Permisos del sistema</h2>
+        <p>
+          La App solicita: ubicación precisa y en segundo plano (imprescindible para la alarma) y
+          notificaciones (para el aviso de llegada). Puedes revocarlos en los ajustes del sistema,
+          entendiendo que la alarma dejará de funcionar.
+        </p>
+      </section>
+
+      <section>
+        <h2>7. Conservación y eliminación</h2>
+        <p>
+          El historial y los favoritos viven en tu dispositivo hasta que los elimines desde la App o
+          la desinstales. Al desinstalar CercaYa se eliminan todos los datos locales.
+        </p>
+      </section>
+
+      <section>
+        <h2>8. Tus derechos</h2>
+        <p>
+          Como la App no almacena tus datos en nuestros servidores, puedes ejercer directamente el
+          borrado y la portabilidad desde el propio dispositivo (borrando el historial o
+          desinstalando la App). Si tienes dudas sobre tus derechos de acceso, rectificación,
+          supresión, oposición o limitación, escríbenos a
+          <a href={`mailto:${CONTACT.privacidad}`}>{CONTACT.privacidad}</a> y responderemos en un
+          plazo máximo de 30 días.
+        </p>
+      </section>
+
+      <section>
+        <h2>9. Menores de edad</h2>
+        <p>
+          La App no está dirigida a menores de 13 años y no recopilamos conscientemente datos de
+          menores.
+        </p>
+      </section>
+
+      <section>
+        <h2>10. Cambios a esta política</h2>
+        <p>
+          Si modificamos esta política, actualizaremos la fecha en esta página y avisaremos dentro de
+          la App cuando el cambio sea significativo.
+        </p>
+      </section>
+
+      <section>
+        <h2>11. Contacto</h2>
+        <p>
+          Para ejercer tus derechos o hacer consultas de privacidad, escríbenos a
+          <a href={`mailto:${CONTACT.privacidad}`}>{CONTACT.privacidad}</a>.
+        </p>
+      </section>
+    </div>
+  </div>
+</Base>

@@ -1,0 +1,45 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../consts';
+---
+
+<Base
+  variant="simple"
+  noindex
+  title={`Página no encontrada | ${SITE.name}`}
+  description="La página que buscas no existe."
+>
+  <div class="wrap wrap--narrow nf">
+    <p class="eyebrow">Error 404</p>
+    <h1 class="page-title">Te pasaste de paradero</h1>
+    <p class="nf__text">
+      La página que buscas no existe o cambió de dirección. Podemos llevarte de vuelta.
+    </p>
+    <div class="nf__cta">
+      <a href="/" class="btn btn--primary">Ir al inicio</a>
+      <a href="/soporte" class="btn btn--ghost">Ir a soporte</a>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .nf {
+    padding-block: 100px 140px;
+    text-align: center;
+  }
+  .nf__text {
+    margin: 14px auto 0;
+    max-width: 440px;
+    font-size: 17px;
+    line-height: 1.6;
+    font-weight: 600;
+    color: var(--ink-muted);
+  }
+  .nf__cta {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    margin-top: 32px;
+    flex-wrap: wrap;
+  }
+</style>
